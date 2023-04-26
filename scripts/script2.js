@@ -28,12 +28,10 @@ class Player {
     return this.globalScore >= 15 ? true : false;
   }
 }
-
 const useNewGame = document.querySelector(".feature__newGame");
 const useFaceDice = document.querySelector(".feature__dice");
 const useRollDice = document.querySelector(".feature__rollDice");
 const useHold = document.querySelector(".feature__hold");
-
 const editBody = document.getElementsByTagName("body");
 const editContainer = document.querySelector(".container");
 const editPlayer1 = document.querySelector(".player1");
@@ -49,22 +47,18 @@ const player1CurrentScore = document.querySelector(
 const player2CurrentScore = document.querySelector(
   ".player__current__score2-p"
 );
-
 let player1 = new Player("Jb", 0, 0);
 let player2 = new Player("Charles", 0, 0);
 let currentPlayer = player1;
 let diceScore = "";
 let victory = false;
 let winner = "";
-
 changeBackground();
 // changeBackgroundGameWon();
-
 useNewGame.addEventListener("click", newGame);
 useHold.addEventListener("click", funcHold);
 useRollDice.addEventListener("click", throwtheDice);
 useFaceDice.addEventListener("click", throwtheDice);
-
 function changeBackground() {
   if (currentPlayer == player1 && winner == "") {
     document.body.style.backgroundImage =
@@ -79,16 +73,11 @@ function changeBackground() {
   } else if (currentPlayer == player1 && winner == player1) {
     document.body.style.backgroundImage =
       "linear-gradient(90deg, var(--color-win) 50%, (--color-lose) 50%);";
-    displayPlayer1Name.style.fontWeight = "300";
-    displayPlayer2Name.style.fontWeight = "200";
   } else if (currentPlayer == player2 && winner == player2) {
     document.body.style.backgroundImage =
       "linear-gradient(90deg, (--color-lose) 50%, var(--color-win) 50%);";
-    displayPlayer2Name.style.fontWeight = "300";
-    displayPlayer1Name.style.fontWeight = "200";
   }
 }
-
 // function changeBackgroundGameWon(){
 //     if (currentPlayer == player1 && winner == player1) {
 //         document.body.style.backgroundImage = 'linear-gradient(90deg, var(--color-win) 50%, (--color-lose) 50%);'
@@ -96,7 +85,6 @@ function changeBackground() {
 //         document.body.style.backgroundImage = 'linear-gradient(90deg, (--color-lose) 50%, var(--color-win) 50%);'
 //     }
 // };
-
 function changeFaceDice() {
   displayFaceDice.src = `./images/dice-${diceScore}.svg`;
   displayFaceDice.setAttribute("alt", `Dé numéro ${diceScore}`);
@@ -106,7 +94,6 @@ function randomDice() {
   changeFaceDice();
   console.log(`dice = ${diceScore}`);
 }
-
 function newGame() {
   player1.initPlayer(player1.name, 0, 0);
   player2.initPlayer(player2.name, 0, 0);
@@ -120,13 +107,11 @@ function newGame() {
   useRollDice.addEventListener("click", throwtheDice);
   useFaceDice.addEventListener("click", throwtheDice);
 }
-
 function disableDiceAndHold() {
   useHold.removeEventListener("click", funcHold);
   useRollDice.removeEventListener("click", throwtheDice);
   useFaceDice.removeEventListener("click", throwtheDice);
 }
-
 function throwtheDice() {
   console.log(currentPlayer);
   randomDice();
@@ -156,7 +141,6 @@ function throwtheDice() {
     }
   }
 }
-
 function funcHold() {
   console.log(
     `currentPlayer : ${currentPlayer.name}, player1 : ${player1.name}, player2 : ${player2.name}`
@@ -168,11 +152,9 @@ function funcHold() {
     if (player1.gameWon() === true) {
       winner = player1;
       currentPlayer = player1;
-      changeBackground();
       disableDiceAndHold();
       alert(`${player1.name} à gagné`);
-      console.log(`And the WINNER IS ... ${winner.name}`);
-      return;
+      return changeBackground();
     }
     currentPlayer = player2;
     changeBackground();
@@ -186,13 +168,9 @@ function funcHold() {
     if (player2.gameWon() === true) {
       winner = player2;
       currentPlayer = player2;
-      changeBackground();
       disableDiceAndHold();
       alert(`${player2.name} à gagné`);
-      console.log(
-        `And the WINNER IS ... ${winner.name} and current player ${currentPlayer.name}`
-      );
-      return;
+      return changeBackground();
     }
     currentPlayer = player1;
     changeBackground();
