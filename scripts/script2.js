@@ -79,9 +79,13 @@ function changeBackground() {
   } else if (currentPlayer == player1 && winner == player1) {
     document.body.style.backgroundImage =
       "linear-gradient(90deg, var(--color-win) 50%, (--color-lose) 50%);";
+    displayPlayer1Name.style.fontWeight = "300";
+    displayPlayer2Name.style.fontWeight = "200";
   } else if (currentPlayer == player2 && winner == player2) {
     document.body.style.backgroundImage =
       "linear-gradient(90deg, (--color-lose) 50%, var(--color-win) 50%);";
+    displayPlayer2Name.style.fontWeight = "300";
+    displayPlayer1Name.style.fontWeight = "200";
   }
 }
 
@@ -164,9 +168,11 @@ function funcHold() {
     if (player1.gameWon() === true) {
       winner = player1;
       currentPlayer = player1;
+      changeBackground();
       disableDiceAndHold();
       alert(`${player1.name} à gagné`);
-      changeBackground();
+      console.log(`And the WINNER IS ... ${winner.name}`);
+      return;
     }
     currentPlayer = player2;
     changeBackground();
@@ -180,9 +186,13 @@ function funcHold() {
     if (player2.gameWon() === true) {
       winner = player2;
       currentPlayer = player2;
+      changeBackground();
       disableDiceAndHold();
       alert(`${player2.name} à gagné`);
-      changeBackground();
+      console.log(
+        `And the WINNER IS ... ${winner.name} and current player ${currentPlayer.name}`
+      );
+      return;
     }
     currentPlayer = player1;
     changeBackground();
