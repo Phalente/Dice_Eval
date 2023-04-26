@@ -19,13 +19,11 @@ const player2CurrentScore = document.querySelector(
 function changeFaceDice() {
   displayFaceDice.src = `./images/dice-${diceScore}.svg`;
 }
-
 function randomDice() {
   diceScore = Math.floor(Math.random() * 6 + 1);
   changeFaceDice();
   console.log(`dice = ${diceScore}`);
 }
-
 class Player {
   constructor(name, globalScore, currentScore) {
     this.name = name;
@@ -51,58 +49,35 @@ class Player {
     this.currentScore = 0;
   }
 }
+
 let player1 = new Player("Jb", 0, 0);
 let player2 = new Player("Charles", 0, 0);
 let currentPlayer = player1;
 let diceScore = "";
-displayPlayer1Name.textContent = `${player1.name}`;
-player1GlobalScore.textContent = `${player1.currentScore}`;
-displayPlayer2Name.textContent = `${player2.name}`;
-player2CurrentScore.textContent = `${player2.currentScore}`;
-// player1.current(randomDice);
-
-// if currentPlayer = player1 on modifie
-// [useRollDice, useFaceDice].forEach(item => {
-//     item.addEventListener('click', event => {
-//         randomDice();
-//         if (currentPlayer = player1){
-//             player1.current();
-//             player1CurrentScore.textContent = `${player1.currentScore}`;
-//             console.log(`currentScore de ${player1.name} = ${player1.currentScore}`);
-//             if (diceScore == 1){
-//                 currentPlayer = player2;
-//                 console.log(currentPlayer);
-//                 return currentPlayer = player2;
-//             }
-//         } else if (currentPlayer = player2) {
-//             player2.current();
-//             player2CurrentScore.textContent = `${player2.currentScore}`;
-//             console.log(`currentScore de ${player2.name} = ${player2.currentScore}`);
-//             if (diceScore == 1){
-//                 currentPlayer = player1;
-//                 console.log(currentPlayer);
-//         }
-//     }
-// })
-// });
 
 [useRollDice, useFaceDice].forEach((item) => {
   item.addEventListener("click", (event) => {
+    console.log(currentPlayer);
     randomDice();
-    if ((currentPlayer = player1)) {
-      currentPlayer.current();
-      player1CurrentScore.textContent = `${currentPlayer.currentScore}`;
+    if (currentPlayer == player1) {
+      player1.current();
+      player1CurrentScore.textContent = `${player1.currentScore}`;
+      console.log(
+        `currentScore de ${currentPlayer.name} = ${player1.currentScore}`
+      );
+      if (diceScore == 1) {
+        player1.currentScore = 0;
+        currentPlayer = player2;
+        console.log(currentPlayer);
+      }
+    } else {
+      player2.current();
+      player2CurrentScore.textContent = `${player2.currentScore}`;
       console.log(
         `currentScore de ${currentPlayer.name} = ${currentPlayer.currentScore}`
       );
       if (diceScore == 1) {
-        currentPlayer == player2;
-      }
-    } else if ((currentPlayer = player2)) {
-      player2.current();
-      player2CurrentScore.textContent = `${player2.currentScore}`;
-      console.log(`currentScore de ${player2.name} = ${player2.currentScore}`);
-      if (diceScore == 1) {
+        player2.currentScore = 0;
         currentPlayer = player1;
         console.log(currentPlayer);
       }
@@ -111,6 +86,24 @@ player2CurrentScore.textContent = `${player2.currentScore}`;
 });
 
 useHold.addEventListener("click", (event) => {
-  currentPlayer.hold();
-  player1GlobalScore.textContent = `${player1.globalScore}`;
+  console.log(
+    `currentPlayer : ${currentPlayer.name}, player1 : ${player1.name}, player2 : ${player2.name}`
+  );
+  if (currentPlayer == player1) {
+    player1.hold();
+    player1GlobalScore.textContent = `${player1.globalScore}`;
+    player1CurrentScore.textContent = `${player1.currentScore}`;
+    currentPlayer = player2;
+    console.log(
+      `currentPlayer : ${currentPlayer.name}, player1 : ${player1.name}, player2 : ${player2.name}`
+    );
+  } else {
+    player2.hold();
+    player2GlobalScore.textContent = `${player2.globalScore}`;
+    player2CurrentScore.textContent = `${player2.currentScore}`;
+    currentPlayer = player1;
+    console.log(
+      `currentPlayer : ${currentPlayer.name}, player1 : ${player1.name}, player2 : ${player2.name}`
+    );
+  }
 });
